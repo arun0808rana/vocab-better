@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/vocab-better/static/css/main.555fba5f.css",
+    "main.js": "/vocab-better/static/js/main.f9e87e40.js",
+    "static/js/787.40acd396.chunk.js": "/vocab-better/static/js/787.40acd396.chunk.js",
+    "static/media/logo.svg": "/vocab-better/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/vocab-better/index.html",
+    "main.555fba5f.css.map": "/vocab-better/static/css/main.555fba5f.css.map",
+    "main.f9e87e40.js.map": "/vocab-better/static/js/main.f9e87e40.js.map",
+    "787.40acd396.chunk.js.map": "/vocab-better/static/js/787.40acd396.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.555fba5f.css",
+    "static/js/main.f9e87e40.js"
+  ]
+}
