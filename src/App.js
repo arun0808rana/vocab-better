@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Pagination from "./Pagination";
 import ShowMeaning from "./ShowMeaning";
-import { useState } from "react";
+import react, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -22,7 +22,7 @@ function App() {
   const [meaningsArray, setmeaningsArray] = useState([]);
 
   const showMeaningsArray = () => {
-    console.log(meaningsArray, "meaningsArray");
+    // console.log(meaningsArray, "meaningsArray");
   };
 
   const onPaginate = (currPage) => {
@@ -31,16 +31,34 @@ function App() {
   };
 
   useEffect(() => {
-    axios
-      .get(wordListEndpoint, { params: { page: currentPage } })
-      .then((res) => {
-        setwordsArray((prevState) => [...prevState, res.data]);
-        wordsArray.forEach((word, index) => {
-          axios.get(meaningURL + word).then((res) => {
-            setmeaningsArray((prevState) => [...prevState, res.data]);
-          });
+    (async () => {
+      for (let word of Array.from(wordsArray)) {
+        try {
+          const res = await axios.get(meaningURL + word);
+          setmeaningsArray((prevState) => [...prevState, res.data])
+        } catch (err) {
+          // console.log('hmm', err);
+          // throw err;
+        }
+      }
+    })()
+  }, [wordsArray]);
+
+  useEffect(() => {
+    console.log(meaningsArray, 'meaningsArray');
+  }, [meaningsArray]);
+
+
+  useEffect(() => {
+    try {
+      axios
+        .get(wordListEndpoint, { params: { page: currentPage } })
+        .then((res) => {
+          setwordsArray(res.data);
         });
-      });
+    } catch (error) {
+      // throw error
+    }
   }, [currentPage]);
 
   return (
@@ -52,15 +70,26 @@ function App() {
       </div>
 
       <div className="card">
-        {[1, 2, 3, 4, 5].map((word, index) => {
+        {wordsArray.length && Array.from(wordsArray).map((word, index) => {
           return (
             <details className="warning" open={state} key={`word-section-${index}`}>
-              <summary>Facts and knowledge about COVID-19</summary>
+              <summary>{word}</summary>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Provident beatae amet voluptatem quae esse, illum omnis
-                dignissimos voluptas quidem quasi ipsum tempore facilis eos,
-                veritatis officiis, quo ipsam nam aspernatur.
+              {/* {
+                meaningsArray.length && meaningsArray[index].length && meaningsArray[index].map(meaning=>{
+                  return(
+                    <div>
+                      word: {meaning.word}
+                      phonetic: {meaning.phonetics[0]}
+                      sound : {meaning.phonetics[1]}
+                      origin: {meaning.origin}
+                      meaning :{meaning.meanings.definitions.map(it=><li>{it.definition}</li>)}
+                    </div>
+
+                  )
+                })
+                
+                } */}
               </p>
             </details>
           );

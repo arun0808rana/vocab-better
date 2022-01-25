@@ -15,13 +15,13 @@ function Pagination(props) {
   };
 
   const paginateOnPageNumberClick = (params) => {
-    console.log(params.target.innerText);
+    // console.log(params.target.innerText);
     setPage(+params.target.innerText);
   };
 
   useEffect(() => {
     localStorage.setItem("currentPage", page);
-    console.log(page);
+    // console.log(page);
   }, [page]);
 
   return (
